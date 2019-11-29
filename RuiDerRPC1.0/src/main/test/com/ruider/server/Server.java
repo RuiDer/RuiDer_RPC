@@ -1,6 +1,6 @@
 package com.ruider.server;
 
-import com.ruider.networkCommunication.BIOService;
+import com.ruider.networkCommunication.IOSelection.BIO.BIOService;
 import com.ruider.networkCommunication.NetIO;
 
 public class Server {

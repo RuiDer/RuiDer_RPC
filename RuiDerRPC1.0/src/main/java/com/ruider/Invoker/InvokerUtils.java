@@ -5,7 +5,6 @@ package com.ruider.Invoker;
  */
 
 import com.ruider.common.ServiceInformation;
-import com.ruider.networkCommunication.BIOService;
 import com.ruider.networkCommunication.NetIO;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -25,27 +24,31 @@ public class InvokerUtils implements InvocationHandler {
     private ServiceInformation serviceInformation;
 
     /**
+     * RPC 远程通信方式
+     */
+    private NetIO netIO;
+
+    /**
      * 获取代理对象
      * @param T
-     * @param url
-     * @param port
+     * @param serviceInformation
+     * @param netIO
      * @return
      */
-    public Object getBean (Class T, String url, int port) {
+    public Object getBean (Class T, ServiceInformation serviceInformation, NetIO netIO) {
         this.clazz = T;
-        ServiceInformation serviceInformation = new ServiceInformation();
-        serviceInformation.setServiceURL(url);
-        serviceInformation.setPort(port);
-        serviceInformation.setClassName(T.getName());
+
         this.serviceInformation = serviceInformation;
+        this.serviceInformation.setClassName(T.getName());
+
+        this.netIO = netIO;
         return Proxy.newProxyInstance(T.getClassLoader(), new Class[]{T}, this);
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        NetIO BIO = new BIOService();
         this.serviceInformation.setMethod(method);
         this.serviceInformation.setArgs(args);
-        return BIO.send(serviceInformation);
+        return netIO.send(serviceInformation);
     }
 }

@@ -1,8 +1,9 @@
-package com.ruider.networkCommunication;
+package com.ruider.networkCommunication.IOSelection.BIO;
 
+import com.ruider.API.UserAPI;
 import com.ruider.common.ServiceInformation;
-import com.ruider.common.UserApi;
-import com.ruider.server.UserService;
+import com.ruider.networkCommunication.NetIO;
+import com.ruider.service.UserService;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -152,10 +153,10 @@ public class BIOService implements NetIO {
 
                 Class clazz = null;
                 //服务匹配
-                if(className.equals(UserApi.class.getName())){
+                if(className.equals(UserAPI.class.getName())){
                     clazz = UserService.class;
                 }
-                //clazz = UserService.class;
+
 
                 Method method = clazz.getMethod(methodName,parameterTypes);
                 Object result = method.invoke(clazz.newInstance(),arguments);

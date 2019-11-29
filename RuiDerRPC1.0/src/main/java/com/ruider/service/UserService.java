@@ -1,9 +1,9 @@
-package com.ruider.server;
+package com.ruider.service;
 
+import com.ruider.API.UserAPI;
 import com.ruider.common.User;
-import com.ruider.common.UserApi;
 
-public class UserService implements UserApi {
+public class UserService implements UserAPI {
 
     @Override
     public User getUser(Integer id) {
